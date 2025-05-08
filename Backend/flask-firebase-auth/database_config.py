@@ -1,9 +1,10 @@
+import os
 from sqlalchemy import create_engine, Column, Integer, String, Text, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Update the connection string with your PostgreSQL credentials and database name
-DATABASE_URL = "postgresql://myuser:mypassword@localhost:5432/riverguard"
+# Read the database URL from environment variable or use default for local development
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://myuser:mypassword@localhost:5432/riverguard")
 
 engine = create_engine(DATABASE_URL, connect_args={}, execution_options={"schema_translate_map": {"public": "myuser_schema"}})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
